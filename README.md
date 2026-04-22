@@ -12,14 +12,6 @@ Designed for performance-critical applications that need direct I/O (`O_DIRECT`)
 - **Direct I/O ready** — proper alignment handling via `fpathconf(_PC_REC_XFER_ALIGN)`
 - **Zero-copy / low-level focus** — `io_pread` / `io_pwrite` with partial-transfer retry loops
 
-## Why This Library?
-
-This library gives you:
-
-- Predictable behavior for high-performance storage engines, databases, or embedded systems
-- Clear, well-commented assembly that is easy to audit and extend
-- Runtime-correct alignment for `O_DIRECT` (no hard-coded 4096 assumptions)
-
 ## Quick Start
 
 ### 1. Build the library and demo
