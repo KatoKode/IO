@@ -1,7 +1,6 @@
 /*------------------------------------------------------------------------------
     IO Implementation in x86_64 Assembly Language with C interface
-
-    Copyright (C) 2025  J. McIntosh
+    Copyright (C) 2026  J. McIntosh
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
