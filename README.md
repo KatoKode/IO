@@ -16,7 +16,6 @@ Designed for performance-critical applications that need direct I/O (`O_DIRECT`)
 
 This library gives you:
 
-- Direct access to Linux syscalls (`open`, `pread64`, `pwrite64`, `fsync`, `fdatasync`, etc.)
 - Predictable behavior for high-performance storage engines, databases, or embedded systems
 - Clear, well-commented assembly that is easy to audit and extend
 - Runtime-correct alignment for `O_DIRECT` (no hard-coded 4096 assumptions)
