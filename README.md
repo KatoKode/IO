@@ -1,7 +1,7 @@
-# SYSCALL_IO
+# IO
 Linux file operations written in pure x86_64 assembly with a C interface as a Shared-Library.
 
-# SYSCALL_IO — Minimal, High-Performance I/O Library in x86_64 Assembly
+# IO — Minimal, High-Performance I/O Library in x86_64 Assembly
 
 Designed for performance-critical applications that need direct I/O (`O_DIRECT`), synchronized writes (`O_DSYNC`).
 
