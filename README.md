@@ -1,4 +1,7 @@
 # IO
+[![License: GPL-2.0](https://img.shields.io/badge/License-GPL%202.0-blue.svg)](https://opensource.org/licenses/GPL-2.0)
+[![Stars](https://img.shields.io/github/stars/KatoKode/IO?style=social)](https://github.com/KatoKode/IO/stargazers)
+
 Linux file operations written in pure x86_64 assembly with a C interface as a Shared-Library.
 
 # IO — Minimal, High-Performance I/O Library in x86_64 Assembly
