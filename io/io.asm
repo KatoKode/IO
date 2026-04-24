@@ -876,9 +876,9 @@ clr_errno:
 ;
 ;   long get_errno ();
 ;
-; param:
+; return:
 ;
-;   rdi = errno
+;   rax = errno
 ; ──────────────────────────────────────────────────────────────────────────────
 
 get_errno:
