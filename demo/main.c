@@ -76,9 +76,7 @@ int main (int argc, char **argv)
   {
     nbyte = (size_t)snprintf(&buffer[off], 8, "%lu", i);
 
-    off += nbyte;
-
-    off += 16 - nbyte;
+    off += DATA_SIZE;
   }
 
   // align file size to a multiple of rec_xfer_align
@@ -147,7 +145,7 @@ int main (int argc, char **argv)
   // output integers from buffer
 
   nbyte = 1;
-  char str[16];
+  char str[DATA_SIZE];
   size_t total = 10;
   for (size_t i = 0; i < DATA_TOTAL; ++i)
   {
@@ -165,9 +163,7 @@ int main (int argc, char **argv)
 
     printf("nread: %ld  str: %-4s\n", nread, str);
 
-    off += nread;
-
-    off += 16 - nread;
+    off += DATA_SIZE;
   }
 
   // close file
