@@ -177,16 +177,26 @@ io_creat:
 ; return:
 ;
 ;   eax = 0 (success) | -1 (failure)
+;
+; stack:
+;
+;   DWORD [rbp - 8]   = fd (file descriptor)
 ; ──────────────────────────────────────────────────────────────────────────────
 
       global io_data_sync:function
 
 io_data_sync:
 
+      push      rbp
+      mov       rbp, rsp
+      sub       rsp, 16
+      mov       DWORD [rbp - 8], edi
+
 ; do {
 
 .loop:
 
+      mov       edi, DWORD [rbp - 8]
       mov       rax, __NR_fdatasync
       syscall
       test      rax, rax
@@ -210,6 +220,8 @@ io_data_sync:
 
 .epilogue:
 
+      mov       rsp, rbp
+      pop       rbp
       ret
 
 ; ──────────────────────────────────────────────────────────────────────────────
@@ -696,16 +708,26 @@ io_read:
 ; return:
 ;
 ;   eax = 0 (success) | -1 (failure)
+;
+; stack:
+;
+;   DWORD [rbp - 8]   = fd (file descriptor)
 ; ──────────────────────────────────────────────────────────────────────────────
 
       global io_sync:function
 
 io_sync:
 
+      push      rbp
+      mov       rbp, rsp
+      sub       rsp, 16
+      mov       DWORD [rbp - 8], edi
+
 ; do {
 
 .loop:
 
+      mov       edi, DWORD [rbp - 8]
       mov       rax, __NR_fsync
       syscall
       test      rax, rax
@@ -729,6 +751,8 @@ io_sync:
 
 .epilogue:
 
+      mov       rsp, rbp
+      pop       rbp
       ret
 
 ; ──────────────────────────────────────────────────────────────────────────────
