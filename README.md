@@ -22,7 +22,7 @@ Designed for performance-critical applications that need direct I/O (`O_DIRECT`)
 # Use the convenience script in the root folder:
 sh ./io_make.sh
 # Or use make in the individual folders
-cd ./io/id
+cd ./io/io
 make clean; make    # builds libio.so
 cd ../demo
 make clean; make    # builds the demo binary
