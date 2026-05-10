@@ -75,7 +75,7 @@ io_close:
 ;   syscall does not set the errno
 ;   value when an error occurs.
 
-      mov       rdi, rax
+      mov       edi, eax
       call      set_errno
 
 ; return -1;
@@ -146,13 +146,13 @@ io_creat:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
+      mov       edi, eax
       call      set_errno
 
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .loop
 
 ; return -1;
