@@ -75,8 +75,7 @@ io_close:
 ;   syscall does not set the errno
 ;   value when an error occurs.
 
-      mov       edi, eax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ; return -1;
 
@@ -146,13 +145,12 @@ io_creat:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       edi, eax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       eax, EINTR
+      cmp       rax, EINTR
       je        .loop
 
 ; return -1;
@@ -205,8 +203,7 @@ io_data_sync:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ; } while (errno == EINTR);
 
@@ -301,8 +298,7 @@ io_open:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ; } while (errno == EINTR);
 
@@ -387,8 +383,7 @@ io_pread:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ;     if (errno != EINTR)
 
@@ -518,7 +513,8 @@ io_pwrite:
 
 .n_eq_zero:
 
-      mov       rdi, EIO
+      mov       rax, EIO
+      neg       rax
       call      set_errno
       mov       eax, -1
       jmp       .epilogue
@@ -528,8 +524,7 @@ io_pwrite:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ;     if (errno != EINTR)
 
@@ -638,8 +633,7 @@ io_read:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ;     if (errno != EINTR)
 
@@ -736,8 +730,7 @@ io_sync:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ; } while (errno == EINTR);
 
@@ -823,7 +816,8 @@ io_write:
 
 .n_eq_zero:
 
-      mov       rdi, EIO
+      mov       rax, EIO
+      neg       rax
       call      set_errno
       mov       eax, -1
       jmp       .epilogue
@@ -833,13 +827,12 @@ io_write:
 ;     syscall does not set the errno
 ;     value when an error occurs.
 
-      mov       rdi, rax
-      call      set_errno
+      call      set_errno   ; rax contains 32-bit errno value
 
 ;     if (errno != EINTR)
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .end_if_1
 
 ;       return -1;
@@ -891,8 +884,8 @@ io_write:
 clr_errno:
 
       call      __errno_location wrt ..plt
-      xor       rcx, rcx
-      mov       QWORD [rax], rcx
+      xor       ecx, ecx
+      mov       DWORD [rax], ecx
       ret
 
 ; ──────────────────────────────────────────────────────────────────────────────
@@ -902,13 +895,14 @@ clr_errno:
 ;
 ; return:
 ;
-;   rax = errno
+;   eax = errno
 ; ──────────────────────────────────────────────────────────────────────────────
 
 get_errno:
 
       call      __errno_location wrt ..plt
-      mov       rax, QWORD [rax]
+      mov       ecx, DWORD [rax]
+      mov       eax, ecx
       ret
 
 
@@ -919,15 +913,17 @@ get_errno:
 ;
 ; param:
 ;
-;   rdi = negative errno value
+;   rax = negative errno value
 ; ──────────────────────────────────────────────────────────────────────────────
 
 set_errno:
 
-      neg       rdi
-      push      rdi
+      push      rbx       ; backup callee-saved register
+      neg       rax
+      mov       rbx, rax
       call      __errno_location wrt ..plt
-      pop       QWORD [rax]
+      mov       DWORD [rax], ebx
+      pop       rbx       ; restore callee-saved register
       ret
 
 %endif
