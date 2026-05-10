@@ -150,7 +150,7 @@ io_creat:
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .loop
 
 ; return -1;
@@ -208,7 +208,7 @@ io_data_sync:
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .loop
 
 ; return -1;
@@ -303,7 +303,7 @@ io_open:
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .loop
 
 ; return -1;
@@ -388,7 +388,7 @@ io_pread:
 ;     if (errno != EINTR)
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .end_if
 
 ;       return -1;
@@ -529,7 +529,7 @@ io_pwrite:
 ;     if (errno != EINTR)
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .end_if_1
 
 ;       return -1;
@@ -638,7 +638,7 @@ io_read:
 ;     if (errno != EINTR)
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .end_if
 
 ;       return -1;
@@ -735,7 +735,7 @@ io_sync:
 ; } while (errno == EINTR);
 
       call      get_errno
-      cmp       rax, EINTR
+      cmp       eax, EINTR
       je        .loop
 
 ; return -1;
