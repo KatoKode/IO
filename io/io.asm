@@ -57,7 +57,7 @@ io_close:
 ;   return 0;
 
       test      rax, rax
-      jz        .epilogue
+      jz        .return
 
 ; }
 ;   syscall does not set the errno
@@ -68,6 +68,9 @@ io_close:
 ; return -1;
 
       mov       eax, -1
+
+.return:
+
       ret
 
 ; ──────────────────────────────────────────────────────────────────────────────
