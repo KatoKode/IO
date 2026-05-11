@@ -43,26 +43,14 @@ section .text
 ; return:
 ;
 ;   eax = 0 (success) | -1 (failure)
-;
-; stack:
-;
-;   DWORD [rbp - 8] = edi (fd)
 ; ──────────────────────────────────────────────────────────────────────────────
 
       global io_close:function
 
 io_close:
 
-; prologue
-
-      push      rbp
-      mov       rbp, rsp
-      sub       rsp, 16
-      mov       DWORD [rbp - 8], edi
-
 ; if (close(fd) == 0) {
 
-      mov       edi, DWORD [rbp - 8]
       mov       rax, __NR_close
       syscall
 
@@ -80,11 +68,6 @@ io_close:
 ; return -1;
 
       mov       eax, -1
-
-.epilogue:
-
-      mov       rsp, rbp
-      pop       rbp
       ret
 
 ; ──────────────────────────────────────────────────────────────────────────────
